@@ -26,12 +26,18 @@ def menu():
     title = colored(text2art('conf manager'), 'yellow')
     desc = colored("System administration utility", "yellow")
     co = colored("Choose options:", 'yellow')
-    f = colored("Choose options:", 'green')
-    
+    f = colored("1. SSH-server", 'green')
+    print(f""" {title}
+      {desc}
+                    {co}
+                        {f}
+
+
+    """)  
     
 
 def main():
     check_root()
-
+    menu()
 if __name__ == '__main__':
     main()
