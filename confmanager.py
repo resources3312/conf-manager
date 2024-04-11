@@ -29,14 +29,17 @@ def clear():
 def menu():
     clear()
     title = colored(text2art('conf manager'), 'yellow')
-    desc = colored("System administration utility", "yellow")
     co = colored("Choose options:", 'yellow')
-    f = colored("1. SSH-server", 'green')
+    f = colored("1. SSH", 'green')
+    s = colored("2. FTP " ,"green")
+    t = colored("3. RDP " ,"green")
+    fr = colored("4. Apatche " ,"green")
     print(f""" {title}
-      {desc}
-                    {co}
-                        {f}
-
+        {co}
+                    {f}
+                    {s}
+                    {t}
+                    {fr}
 
     """)  
     

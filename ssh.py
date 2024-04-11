@@ -22,6 +22,13 @@ def check_root():
     else:
         pass
 
+
+
+def clear():
+    if sys.platform == 'win32':
+        os.system("cls")
+    else:
+        os.system("clear")
 def get_local_ipv4():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.connect(("8.8.8.8", 80))
@@ -31,21 +38,28 @@ def sshinstall():
     os.system("apt update")
     os.system("apt install openssh-server -y")
     print("Done")
-    os.system("clear")
+    clear()
     choose()
 def sshdown():
-    os.system("systemctl disable ssh")
-    print("Done")
-    os.system("clear")
+    if sys.platform == 'win32':
+        pass
+    else:
+         os.system("systemctl disable ssh")
+         print("Done")
+         os.system("clear")
     choose()
 def sshup():
-    os.system("systemctl enable ssh")
-    os.system("systemctl restart ssh")
+    if sys.platform == 'win32':
+        pass
+
+    else:
+         os.system("systemctl enable ssh")
+         os.system("systemctl restart ssh")
     print("Done")
-    os.system("clear")
+    clear()
     choose()
 def choose():
-    os.system("clear")
+    clear()
     a = colored(text2art("ssh manager"), 'yellow')
     op = colored('Choose option:', 'yellow')
     b = colored("1. Enable ssh server",'green')
@@ -81,7 +95,6 @@ def choose():
         else:
             choose()
 def main():
-    check_root()
     choose()
 
 if __name__ == '__main__':
