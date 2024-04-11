@@ -19,10 +19,15 @@ def check_root():
         pass
 
 
-
+def clear():
+    if sys.platform == 'win32':
+        os.system('cls')
+    else:
+        os.system("clear")
 
 
 def menu():
+    clear()
     title = colored(text2art('conf manager'), 'yellow')
     desc = colored("System administration utility", "yellow")
     co = colored("Choose options:", 'yellow')
@@ -37,7 +42,6 @@ def menu():
     
 
 def main():
-    check_root()
     menu()
 if __name__ == '__main__':
     main()
