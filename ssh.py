@@ -16,6 +16,9 @@ import os
 import sys
 from art import text2art
 from termcolor import colored, cprint
+
+global ip
+
 def check_root():
     if os.getuid() != 0:
         sys.exit("Running script with root")
@@ -32,7 +35,7 @@ def clear():
 def get_local_ipv4():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.connect(("8.8.8.8", 80))
-    print(s.getsockname()[0])
+    ip = s.getsockname()[0]
     s.close()
 def sshinstall():
     os.system("apt update")
@@ -45,6 +48,7 @@ def sshdown():
         pass
     else:
          os.system("systemctl disable ssh")
+         
          print("Done")
          os.system("clear")
     choose()
@@ -96,6 +100,5 @@ def choose():
             choose()
 def main():
     choose()
-
 if __name__ == '__main__':
     main()
