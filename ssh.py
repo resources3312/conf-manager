@@ -16,7 +16,7 @@ import os
 import sys
 from art import text2art
 from termcolor import colored, cprint
-
+import confmanager
 global ip
 
 def check_root():
@@ -40,26 +40,22 @@ def get_local_ipv4():
 def sshinstall():
     os.system("apt update")
     os.system("apt install openssh-server -y")
-    print("Done")
     clear()
     choose()
 def sshdown():
-    if sys.platform == 'win32':
+    if sys.platform == 'win*':
         pass
     else:
          os.system("systemctl disable ssh")
-         
-         print("Done")
-         os.system("clear")
+         clear()
     choose()
 def sshup():
-    if sys.platform == 'win32':
+    if sys.platform == 'win*':
         pass
 
     else:
          os.system("systemctl enable ssh")
          os.system("systemctl restart ssh")
-    print("Done")
     clear()
     choose()
 def choose():
@@ -70,7 +66,7 @@ def choose():
     t = colored("2. Disable ssh server",'green')
         
     d = colored("3. Install ssh server",'green')
-    e = colored("4. Exit", 'green')
+    e = colored("4. Main menu", 'green')
 
     cprint(f"""{a}
         
@@ -84,18 +80,18 @@ def choose():
     com = input(colored('>', 'green'))
     while True:
         if com == '1':
-            os.system("clear")
+            clear()
             sshup()
         elif com == '2':
-            os.system("clear")
+            clear()
             sshdown()
         elif com == '3':
-            os.system('clear')
+            clear()
             sshinstall()
             choose()
         elif com == '4':
-            os.system("clear")
-            sys.exit()
+            clear()
+            confmanager.main()
         else:
             choose()
 def main():

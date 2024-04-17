@@ -26,7 +26,7 @@ def clear():
         os.system("clear")
 
 
-def menu():
+def art():
     clear()
     title = colored(text2art('conf manager'), 'yellow')
     co = colored("Choose options:", 'yellow')
@@ -42,20 +42,27 @@ def menu():
                     {fr}
                     {ex}
     """)  
-    com = colored(input(">"), "green")
+
+def menu():
+    art()
+    com = None
+    com = input(colored(">","green"))
     while True:
-        if com == '1':
-            clear()
+        if com == "1":
             ssh.main()
+        
         elif com == '2':
             pass
+            #ftp.main()
         elif com == '3':
             pass
+            #rdp.main()
         elif com == '4':
             pass
+            #apache.main()       
         elif com == '5':
             clear()
-            sys.exit()
+            sys.exit("")
         else:
             menu()
 def main():
