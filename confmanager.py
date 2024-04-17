@@ -61,8 +61,7 @@ def menu():
             pass
             #apache.main()       
         elif com == '5':
-            clear()
-            sys.exit("")
+            sys.exit(colored("Quitting..." ,"green"))
         else:
             menu()
 def main():
