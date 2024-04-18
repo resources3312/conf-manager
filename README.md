@@ -1,1 +1,1 @@
-# SSH-manager
+# Conf-manager
