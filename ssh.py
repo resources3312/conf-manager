@@ -18,7 +18,6 @@ from art import text2art
 from termcolor import colored, cprint
 import confmanager
 global ip
-
 def check_root():
     if os.getuid() != 0:
         sys.exit("Running script with root")
@@ -33,10 +32,13 @@ def clear():
     else:
         os.system("clear")
 def get_local_ipv4():
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s.connect(("8.8.8.8", 80))
-    ip = s.getsockname()[0]
-    s.close()
+    try:    
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(("8.8.8.8", 80))
+        ip = s.getsockname()[0]
+        s.close()
+    except:
+           print("Connect for network and try again ")
 def sshinstall():
     os.system("apt update")
     os.system("apt install openssh-server -y")
@@ -66,15 +68,17 @@ def choose():
     t = colored("2. Disable ssh server",'green')
         
     d = colored("3. Install ssh server",'green')
-    e = colored("4. Main menu", 'green')
-
+    
+    con = colored("4. Configure",'green')
+    ex = colored("5. Main menu",'green')
     cprint(f"""{a}
         
         {op}
             {b}
             {t}
             {d}
-            {e}
+            {con}
+            {ex}
     """, 'yellow')
     com = ''
     com = input(colored('>', 'green'))
@@ -90,10 +94,45 @@ def choose():
             sshinstall()
             choose()
         elif com == '4':
+            sshconf()
+        elif com == '5':
             clear()
             confmanager.main()
         else:
             choose()
+
+def sshconf():
+    clear()
+    confart = colored(text2art("Configure") ,'yellow')
+    coc = colored("Choose option:","yellow")
+    fo = colored("1. Set ip:port" ,"green")
+    so = colored( "2. Enable/Disable passwdauth","green")
+    to = colored("3. Main menu","green")
+    print(f"""
+        {confart}
+            {coc}
+                {fo}
+                {so}
+                {to}
+
+
+
+
+
+    """)
+    ent = ''
+    ent = input(colored('>' ,"green"))
+    while True:
+        if ent == '1':
+            pass
+            #confipport()
+        elif ent == '2':
+            pass
+            #passwdauth()
+        elif ent == '3':
+            main()
+        else:
+            sshconf()
 def main():
     choose()
 if __name__ == '__main__':
