@@ -12,6 +12,7 @@ import sys
 from termcolor import colored
 import ssh 
 import ftp
+import rdp
 def check_root():
     if os.getuid() != 0:
         sys.exit("Running util for root")
@@ -55,13 +56,12 @@ def menu():
         elif com == '2':
             ftp.main()
         elif com == '3':
-            pass
-            #rdp.main()
+            rdp.main()
         elif com == '4':
             pass
             #apache.main()       
         elif com == '5':
-            sys.exit(colored("Quitting..." ,"green"))
+            sys.exit(colored("Quitting..." ,"white"))
         else:
             menu()
 def main():
