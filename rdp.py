@@ -62,23 +62,22 @@ def rdpup():
     choose()
 def choose():
     clear()
-    a = colored(text2art("rdp manager"), 'yellow')
-    op = colored('Choose option:', 'yellow')
-    b = colored("1. Enable rdp server",'green')
-    t = colored("2. Disable rdp server",'green')
-        
-    d = colored("3. Install rdp server",'green')
+    rdp_manager_art = colored(text2art("rdp manager"), 'yellow')
+    rdp_manager_choose = colored('Choose option:', 'yellow')
+    rdp_manager_button_1 = colored("1. Enable rdp server",'green')
+    rdp_manager_button_2 = colored("2. Disable rdp server",'green')
+    rdp_manager_button_3 = colored("3. Install rdp server",'green')
 
-    con = colored("4. Configure",'green')
-    ex = colored("5. Main menu",'green')
-    cprint(f"""{a}
+    rdp_manager_button_4 = colored("4. Configure",'green')
+    rdp_manager_back = colored("5. Main menu",'green')
+    cprint(f"""{rdp_manager_art}
         
-        {op}
-            {b}
-            {t}
-            {d}
-            {con}
-            {ex}
+        {rdp_manager_choose}
+            {rdp_manager_button_1}
+            {rdp_manager_button_2}
+            {rdp_manager_button_3}
+            {rdp_manager_button_4}
+            {rdp_manager_back}
     """, 'yellow')
     com = ''
     com = input(colored('>', 'green'))
@@ -102,50 +101,43 @@ def choose():
             choose()
 def setipport():
     clear()
-    ar = colored(text2art('ipv4&port') ,'yellow')
-    en = colored('Enter ipv4 address:',"yellow")
+    rdp_configure_setiport_art = colored(text2art('ipv4&port') ,'yellow')
+    rdp_configure_button_1 = colored('Enter ipv4 address:',"yellow")
     print(f"""
-        {ar} 
+        {rdp_configure_setiport_art} 
         
-    {en}    
+    {rdp_configure_button_1}    
 
-
-
-
-    """)
+""")
     ip = 'Port' + int(input(colored('>',"green")))
     port = input(colored('>',"green"))
-    os.system(f"sed -i 14s/")  # 14, 16, 57 strings this main part conffile
+    os.system(f"sed -i 14s/")     
     sshconf()
 
 def rdpconf():
     clear()
-    confart = colored(text2art("configure") ,'yellow')
-    coc = colored('Choose option:','yellow')
-    fo = colored("1. Set ip:port" ,"green")
-    so = colored( "2. Enable/Disable passwdauth","green")
-    to = colored("3. Main menu","green")
+    rdp_configure_art = colored(text2art("configure") ,'yellow')
+    rdp_configure_choose = colored('Choose option:','yellow')
+    rdp_configure_button_1 = colored("1. Set ip:port" ,"green")
+    rdp_configure_button_2 = colored( "2. Enable/Disable passwdauth","green")
+    rdp_configure_back = colored("3. Main menu","green")
     print(f"""
-        {confart}
-            {coc}
-                {fo}
-                {so}
-                {to}
+        {rdp_configure_art}
+            {rdp_configure_choose}
+                {rdp_configure_button_1}
+                {rdp_configure_button_2}
+                {rdp_configure_back}
 
-
-
-
-
-    """)
-    ent = ''
-    ent = input(colored('>' ,"green"))
+""")
+    com = ''
+    com = input(colored('>' ,"green"))
     while True:
-        if ent == '1':
+        if com == '1':
             setipport()
-        elif ent == '2':
+        elif com == '2':
             pass
             #passwdauth()
-        elif ent == '3':
+        elif com == '3':
             main()
         else:
             rdpconf()

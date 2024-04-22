@@ -1,13 +1,10 @@
 #! /usr/bin/python
 
 ################################################
-#  ssh manager                                 #
+#  ftp manager                                 #
 # This first module confmanager, who is        #
-# responsible for ssh-server. I fell like      #
-#  Linus Torvalds, which write descriptions    #
-#  for Linux sources = >                       #
-#  Github:                                     #
-#  Coded by: ViCoder32                         #
+# responsible for ssh-server.                  #
+# Coded by: ViCoder32                         #
 #                                              #
 ################################################
 
@@ -62,23 +59,23 @@ def ftpup():
     choose()
 def choose():
     clear()
-    a = colored(text2art("ftp manager"), 'yellow')
-    op = colored('Choose option:', 'yellow')
-    b = colored("1. Enable ftp server",'green')
-    t = colored("2. Disable ftp server",'green')
+    ftp_manager_art = colored(text2art("ftp manager"), 'yellow')
+    ftp_choose = colored('Choose option:', 'yellow')
+    ftp_button_1 = colored("1. Enable ftp server",'green')
+    ftp_button_2 = colored("2. Disable ftp server",'green')
         
-    d = colored("3. Install ftp server",'green')
+    ftp_button_3 = colored("3. Install ftp server",'green')
 
-    con = colored("4. Configure",'green')
-    ex = colored("5. Main menu",'green')
-    cprint(f"""{a}
+    ftp_configure = colored("4. Configure",'green')
+    ftp_back = colored("5. Main menu",'green')
+    cprint(f"""{ftp_manager_art}
         
-        {op}
-            {b}
-            {t}
-            {d}
-            {con}
-            {ex}
+        {ftp_choose}
+            {ftp_button_1}
+            {ftp_button_2}
+            {ftp_button_3}
+            {ftp_configure}
+            {ftp_back}
     """, 'yellow')
     com = ''
     com = input(colored('>', 'green'))
@@ -102,50 +99,42 @@ def choose():
             choose()
 def setipport():
     clear()
-    ar = colored(text2art('ipv4&port') ,'yellow')
-    en = colored('Enter ipv4 address:',"yellow")
+    ftp_configure_setipport_art = colored(text2art('ipv4&port') ,'yellow')
+    ftp_configure_setipport_button_1 = colored('Enter ipv4 address:',"yellow")
     print(f"""
-        {ar} 
-        
-    {en}    
+        {ftp_configure_setipport_art} 
+            {ftp_configure_setipport_button_1 }    
 
-
-
-
-    """)
+""")
     ip = 'Port' + int(input(colored('>',"green")))
     port = input(colored('>',"green"))
-    os.system(f"sed -i 14s/")  # 14, 16, 57 strings this main part conffile
+    os.system(f"sed -i 14s/")
     sshconf()
 
 def ftpconf():
     clear()
-    confart = colored(text2art("configure") ,'yellow')
-    coc = colored('Choose option:','yellow')
-    fo = colored("1. Set ip:port" ,"green")
-    so = colored( "2. Enable/Disable passwdauth","green")
-    to = colored("3. Main menu","green")
+    ftp_configure_art = colored(text2art("configure") ,'yellow')
+    ftp_configure_choose = colored('Choose option:','yellow')
+    ftp_configure_button_1 = colored("1. Set ip:port" ,"green")
+    ftp_configure_button_2 = colored( "2. Enable/Disable passwdauth","green")
+    ftp_configure_button_3 = colored("3. Main menu","green")
     print(f"""
-        {confart}
-            {coc}
-                {fo}
-                {so}
-                {to}
+        { ftp_configure_art}
+            {ftp_configure_choose}
+                {ftp_configure_button_1}
+                {ftp_configure_button_2}
+                {ftp_configure_button_3}
 
-
-
-
-
-    """)
-    ent = ''
-    ent = input(colored('>' ,"green"))
+""")
+    com = ''
+    com = input(colored('>' ,"green"))
     while True:
-        if ent == '1':
+        if com == '1':
             setipport()
-        elif ent == '2':
+        elif com == '2':
             pass
             #passwdauth()
-        elif ent == '3':
+        elif com == '3':
             main()
         else:
             ftpconf()

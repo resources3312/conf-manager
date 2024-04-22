@@ -3,10 +3,7 @@
 ################################################
 #  ssh manager                                 #
 # This first module confmanager, who is        #
-# responsible for ssh-server. I fell like      #
-#  Linus Torvalds, which write descriptions    #
-#  for Linux sources = >                       #
-#  Github:                                     #
+# responsible for ssh-server.                  #
 #  Coded by: ViCoder32                         #
 #                                              #
 ################################################
@@ -62,23 +59,23 @@ def sshup():
     choose()
 def choose():
     clear()
-    a = colored(text2art("ssh manager"), 'yellow')
-    op = colored('Choose option:', 'yellow')
-    b = colored("1. Enable ssh server",'green')
-    t = colored("2. Disable ssh server",'green')
-        
-    d = colored("3. Install ssh server",'green')
+    ssh_manager_art = colored(text2art("ssh manager"), 'yellow')
+    ssh_choose = colored('Choose option:', 'yellow')
+    ssh_button_1 = colored("1. Enable ssh server",'green')
+    ssh_button_2 = colored("2. Disable ssh server",'green')
+    ssh_button_3  = colored("3. Install ssh server",'green')
+    ssh_configure = colored("4. Configure",'green')
+    ssh_back = colored("5. Main menu",'green')
+    cprint(f"""{ssh_manager_art}
+            {ssh_choose}          
+                {ssh_button_1}
+                {ssh_button_2}
+                {ssh_button_3}
+                {ssh_configure}
+                {ssh_back}
     
-    con = colored("4. Configure",'green')
-    ex = colored("5. Main menu",'green')
-    cprint(f"""{a}
-        
-        {op}
-            {b}
-            {t}
-            {d}
-            {con}
-            {ex}
+
+
     """, 'yellow')
     com = ''
     com = input(colored('>', 'green'))
@@ -100,36 +97,47 @@ def choose():
             confmanager.main()
         else:
             choose()
+def setipport():
+    clear()
+    ssh_confugure_setipport = colored(text2art('ipv4&port') ,'yellow')
+    com = colored('Enter ipv4 address:',"yellow")
+    print(f"""
+        {ssh_confugure_setipport} 
+        {com}    
+    """)
+    ip = int(input(colored('>',"green")))
+    port = input(colored('>',"green"))
+    os.system(f"sed -i 14s/")  
+    sshconf()
 
 def sshconf():
     clear()
-    confart = colored(text2art("Configure") ,'yellow')
-    coc = colored("Choose option:","yellow")
-    fo = colored("1. Set ip:port" ,"green")
-    so = colored( "2. Enable/Disable passwdauth","green")
-    to = colored("3. Main menu","green")
+    ssh_configure_art = colored(text2art("configure") ,'yellow')
+    ssh_configure_choose = colored('Choose option:','yellow')
+    ssh_configure_button_1 = colored("1. Set ip:port" ,"green")
+    ssh_configure_button_2 = colored( "2. Enable/Disable passwdauth","green")
+    ssh_configure_back = colored("3. Main menu","green")
     print(f"""
-        {confart}
-            {coc}
-                {fo}
-                {so}
-                {to}
+        {ssh_configure_art}
+            {ssh_configure_choose}
+                {ssh_configure_button_1}
+                {ssh_configure_button_2}
+                {ssh_configure_back}
 
 
 
 
 
     """)
-    ent = ''
-    ent = input(colored('>' ,"green"))
+    com = ''
+    com = input(colored('>' ,"green"))
     while True:
-        if ent == '1':
-            pass
-            #confipport()
-        elif ent == '2':
+        if com == '1':
+            setipport()
+        elif com == '2':
             pass
             #passwdauth()
-        elif ent == '3':
+        elif com == '3':
             main()
         else:
             sshconf()
