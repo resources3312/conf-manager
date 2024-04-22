@@ -1,9 +1,8 @@
 #! /usr/bin/python
 ######################################
-# This is main file confmanager,
+# This main file confmanager,
 # In this file only cli interface,
-# any modules in directory
-# Github: 
+# any modules in directory 
 # Coded by: Vicoder32
 ######################################
 from art import text2art
@@ -30,20 +29,22 @@ def clear():
 
 def art():
     clear()
-    title = colored(text2art('conf manager'), 'yellow')
-    co = colored("Choose options:", 'yellow')
-    f = colored("1. SSH", 'green')
-    s = colored("2. FTP " ,"green")
-    t = colored("3. RDP " ,"green")
-    fr = colored("4. Apache " ,"green")
-    ex = colored("5. Exit", 'green')
-    print(f""" {title}     {co}
-                    {f}
-                    {s}
-                    {t}
-                    {fr}
-                    {ex}
-    """)  
+    confmanager_art = colored(text2art('confmanager'), 'yellow')
+    confmanager_choose = colored("Choose options:", 'yellow')
+    confmanager_button_1 = colored("1. SSH", 'green')
+    confmanager_button_2 = colored("2. FTP " ,"green")
+    confmanager_button_3 = colored("3. RDP " ,"green")
+    confmanager_button_4 = colored("4. Apache " ,"green")
+    confmanager_exit = colored("5. Exit", 'green')
+    print(f""" {confmanager_art}     
+                    {confmanager_choose}
+                        {confmanager_button_1}
+                        {confmanager_button_2}
+                        {confmanager_button_3}
+                        {confmanager_button_4}
+                        {confmanager_exit}
+    
+ """)  
 
 def menu():
     art()
@@ -61,7 +62,7 @@ def menu():
             pass
             #apache.main()       
         elif com == '5':
-            sys.exit(colored("Quitting..." ,"white"))
+            sys.exit("Quitting...")
         else:
             menu()
 def main():
