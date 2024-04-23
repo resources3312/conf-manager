@@ -7,7 +7,7 @@
 #  Coded by: ViCoder32                         #
 #                                              #
 ################################################
-
+from subprocess import getoutput
 import socket
 import os
 import sys
@@ -105,9 +105,9 @@ def setipport():
         {ssh_confugure_setipport} 
         {com}    
     """)
-    ip = int(input(colored('>',"green")))
-    port = input(colored('>',"green"))
-    os.system(f"sed -i 14s/")  
+    ip = str(input(colored('>',"green")))
+    port = int(input(colored('>',"green")))
+    os.system(f"sed -i s/Port\s22/Port\s{port}/wg /etc/ssh/sshd_config")  
     sshconf()
 def passwdauth():
     clear()
@@ -128,7 +128,7 @@ def passwdauth():
             user = getoutput('whoami')
             if user != 'root':
                 clear()
-                cprint("Good work bro, you crack confmanager and running without root, you are try hecker :>>", "green")                          clear()
+                cprint("Good work bro, you crack confmanager and running without root, you are try hecker :>>", "green")                          
                 cprint('-' * 100, 'red')
                 cprint('Seriusly?',"red")
                 clear()
@@ -138,6 +138,7 @@ def passwdauth():
                 sys.exit()
             else:
                 os.system("passwd")
+                print(colored('[+] Password change', 'green'))
                 sshconf()
         elif com == '2':
             sshconf()
