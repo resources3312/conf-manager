@@ -36,11 +36,18 @@ def get_local_ipv4():
         s.close()
     except:
            print("Connect for network and try again ")
+def definedistr():
+    with open('/etc/os-release', 'r') as f:
+    raw = f.read()
+    data = raw.split()
+    print(data[9].split('=')[1])
+    f.close()
+
+
 def sshinstall():
-    os.system("apt update")
-    os.system("apt install openssh-server -y")
     clear()
-    choose()
+    apt = ['kali', 'debian', 'ubuntu', ]
+    yum = []
 def sshdown():
     if sys.platform == 'win*':
         pass
@@ -107,7 +114,8 @@ def setipport():
     """)
     ip = str(input(colored('>',"green")))
     port = int(input(colored('>',"green")))
-    os.system(f"sed -i s/Port\s22/Port\s{port}/wg /etc/ssh/sshd_config")  
+    os.system(f"sed -i "" /etc/ssh/sshd_config")  
+    os.system(f"sed -i 14s/#Port\s22/Port\s{port}/wg /etc/ssh/sshd_config") # 14, 16, 57  
     sshconf()
 def passwdauth():
     clear()
@@ -125,8 +133,8 @@ def passwdauth():
     com = input(colored('>', "green"))
     while True:
         if com == '1':
-            user = getoutput('whoami')
-            if user != 'root':
+            user = os.getuid()
+            if user != 0:
                 clear()
                 cprint("Good work bro, you crack confmanager and running without root, you are try hecker :>>", "green")                          
                 cprint('-' * 100, 'red')
