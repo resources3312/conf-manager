@@ -1,9 +1,9 @@
 #! /usr/bin/python
 
 ################################################
-#  ssh manager                                 #
+#  rdp manager                                 #
 # This first module confmanager, who is        #
-# responsible for ssh-server. I fell like      #
+# responsible for rdp-server. I fell like      #
 #  Linus Torvalds, which write descriptions    #
 #  for Linux sources = >                       #
 #  Github:                                     #
@@ -39,16 +39,28 @@ def get_local_ipv4():
         s.close()
     except:
            print("Connect for network and try again ")
+
+def definedistr():
+    with open('/etc/os-release', 'r') as f:
+        raw = f.read()
+        data = raw.split()
+        print(data[9].split('=')[1])
+
+
+
+
+
 def rdpinstall():
     os.system("apt update")
-    os.system("apt install openssh-server -y")
+    os.system("apt install xrdp -y")
+    os.system("apt install xorgrdp -y")
     clear()
     choose()
 def rdpdown():
     if sys.platform == 'win*':
         pass
     else:
-         os.system("systemctl disable ssh")
+         os.system("systemctl disable xrdp")
          clear()
     choose()
 def rdpup():
@@ -56,8 +68,8 @@ def rdpup():
         pass
 
     else:
-         os.system("systemctl enable ssh")
-         os.system("systemctl restart ssh")
+         os.system("systemctl enable xrdp")
+         os.system("systemctl restart xrdp")
     clear()
     choose()
 def choose():
@@ -112,7 +124,7 @@ def setipport():
     ip = 'Port' + int(input(colored('>',"green")))
     port = input(colored('>',"green"))
     os.system(f"sed -i 14s/")     
-    sshconf()
+    rdpconf()
 
 def rdpconf():
     clear()

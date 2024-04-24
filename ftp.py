@@ -4,7 +4,7 @@
 #  ftp manager                                 #
 # This first module confmanager, who is        #
 # responsible for ssh-server.                  #
-# Coded by: ViCoder32                         #
+# Coded by: ViCoder32                          #
 #                                              #
 ################################################
 
@@ -36,6 +36,15 @@ def get_local_ipv4():
         s.close()
     except:
            print("Connect for network and try again ")
+def definedistr():
+    with open('/etc/os-release', 'r') as f:
+        raw = f.read()
+        data = raw.split()
+        print(data[9].split('=')[1])
+
+
+
+
 def ftpinstall():
     os.system("apt update")
     os.system("apt install openssh-server -y")

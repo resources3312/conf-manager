@@ -35,6 +35,16 @@ def get_local_ipv4():
         s.close()
     except:
            print("Connect for network and try again ")
+
+def definedistr():
+    with open('/etc/os-release', 'r') as f:
+        raw = f.read()
+        data = raw.split()
+        print(data[9].split('=')[1])
+
+
+
+
 def apacheinstall():
     os.system("apt update")
     os.system("apt install openssh-server -y")
