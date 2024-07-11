@@ -14,7 +14,10 @@ import sys
 from art import text2art
 from termcolor import colored, cprint
 import confmanager 
-global ip
+
+
+
+
 def check_root():
     if os.getuid() != 0:
         sys.exit("Running script with root")
@@ -34,6 +37,7 @@ def get_local_ipv4():
         s.connect(("8.8.8.8", 80))
         ip = s.getsockname()[0]
         s.close()
+        return ip
     except:
            print("Connect for network and try again ")
 

@@ -45,11 +45,17 @@ def get_local_ipv4():
     except:
            print("Connect for network and try again ")
 
+
 def definedistr():
-    with open('/etc/os-release', 'r') as f:
-        raw = f.read()
-        data = raw.split()
-        print(data[9].split('=')[1])
+    f = open('/etc/os-release', 'r')
+    raw = f.read()
+    data = raw.split()
+    distr = data[9].split('=')[1]
+    f.close()
+    if distr != None:
+        return distr
+    else:
+        return False
 
 
 
