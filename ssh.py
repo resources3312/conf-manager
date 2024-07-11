@@ -45,7 +45,10 @@ def definedistr():
     data = raw.split()
     distr = data[9].split('=')[1]
     f.close()
-    return distr
+    if distr != None:
+        return distr
+    else:
+        return False
 
 
 def sshinstall():
@@ -55,8 +58,9 @@ def sshinstall():
          os.system("scoop install <service>")
         except:
             print("scoop not installed")
-            os.system("""""")
-            sshinstall()
+            #os.system("")
+            #sshinstall()
+            sys.exit()
     else:
         clear()
         apt = ['debian', 'ubuntu']
@@ -173,7 +177,7 @@ def passwdauth():
             user = os.getuid()
             if user != 0:
                 clear()
-                cprint("Good work bro, you crack confmanager and running without root, you are try hecker :>>", "green")                          
+                cprint("Good job bro, you crack confmanager and running without root, you are try hecker :>>", "green")                          
                 cprint('-' * 100, 'red')
                 cprint('Seriusly?',"red")
                 clear()
