@@ -13,7 +13,7 @@ import os
 import sys
 from art import text2art
 from termcolor import colored, cprint
-import confmanager
+import confmanager 
 global ip
 def check_root():
     if os.getuid() != 0:
@@ -36,45 +36,55 @@ def get_local_ipv4():
         s.close()
     except:
            print("Connect for network and try again ")
+
+
+
 def definedistr():
     f = open('/etc/os-release', 'r')
     raw = f.read()
     data = raw.split()
-    print(data[9].split('=')[1])
+    distr = data[9].split('=')[1]
     f.close()
+    return distr
 
 
 def sshinstall():
-    clear()
-    apt = ['kali', 'debian', 'ubuntu', ]
-    yum = ['centos']
-    dnf = ['fedora']
-    pacman = ['arch', ]
-    rpm = []
-    emerge = ['gentoo']
-    distr = definedistr()
-    if distr in apt:
-        os.system('apt update -y')
-        os.system('apt install openssh-server -y')
-    elif distr in yum:
-        pass
-    elif distr in dnf:
-        os.system("dnf update")
-        os.system('dnf install openssh-server -y')
-    elif distr in pacman:
-        
-        os.system('pacman -Sy')
-        os.system('pacman -S openssh')
-    elif distr in rpm:
-        os.system("rpm update")
-    elif distr in emerge:
-        pass
+    if sys.platform == 'win*':
+        clear()
+        try:
+         os.system("scoop install <service>")
+        except:
+            print("scoop not installed")
+            os.system("""""")
+            sshinstall()
     else:
-        choose()
-
-
-
-
+        clear()
+        apt = ['debian', 'ubuntu']
+        yum = ['centos']
+        dnf = ['fedora']
+        pacman = ['arch', ]
+        rpm = []
+        emerge = ['gentoo']
+        distr = definedistr()
+        if distr in apt:
+            os.system('apt update -y')
+            os.system('apt install openssh-server -y')
+        elif distr in yum:
+            pass
+        elif distr in dnf:
+            os.system("dnf update")
+            os.system('dnf install openssh-server -y')
+        elif distr in pacman:
+            os.system('pacman -Sy')
+            os.system('pacman -S openssh')
+        elif distr in rpm:
+            os.system("rpm update")
+            os.system('rpm install ')
+        elif distr in emerge:
+            os.system('emerge --sync')
+            os.system('emerge openssh')
+        else:
+            menu()
 
 def sshdown():
     if sys.platform == 'win*':
@@ -82,7 +92,7 @@ def sshdown():
     else:
          os.system("systemctl disable ssh")
          clear()
-    choose()
+    menu()
 def sshup():
     if sys.platform == 'win*':
         pass
@@ -91,18 +101,18 @@ def sshup():
          os.system("systemctl enable ssh")
          os.system("systemctl restart ssh")
     clear()
-    choose()
-def choose():
+    menu()
+def menu():
     clear()
     ssh_manager_art = colored(text2art("ssh manager"), 'yellow')
-    ssh_choose = colored('Choose option:', 'yellow')
+    ssh_menu = colored('Choose option:', 'yellow')
     ssh_button_1 = colored("1. Enable ssh server",'green')
     ssh_button_2 = colored("2. Disable ssh server",'green')
     ssh_button_3  = colored("3. Install ssh server",'green')
     ssh_configure = colored("4. Configure",'green')
     ssh_back = colored("5. Main menu",'green')
     cprint(f"""{ssh_manager_art}
-            {ssh_choose}          
+            {ssh_menu}          
                 {ssh_button_1}
                 {ssh_button_2}
                 {ssh_button_3}
@@ -118,20 +128,17 @@ def choose():
         if com == '1':
             clear()
             sshup()
-        elif com == '2':
-            clear()
-            sshdown()
         elif com == '3':
-            clear()
             sshinstall()
-            choose()
+        elif com == '2':
+            sshdown()
         elif com == '4':
             sshconf()
         elif com == '5':
             clear()
             confmanager.main()
         else:
-            choose()
+             menu()
 def setipport():
     clear()
     ssh_confugure_setipport = colored(text2art('ipv4&port') ,'yellow')
@@ -140,8 +147,8 @@ def setipport():
         {ssh_confugure_setipport} 
         {com}    
     """)
-    ip = str(input(colored('>',"green")))
-    port = int(input(colored('>',"green")))
+    ip = str(input(colored('ip>',"green")))
+    port = int(input(colored('port>',"green")))
     os.system(f"sed -i '16a\ListenAddress {ip}' /etc/ssh/sshd_config")
     os.system(f"sed -i '16d' /etc/ssh/sshd_config")
     os.system(f"sed -i '14a\Port {port}' /etc/ssh/sshd_config")
@@ -150,11 +157,11 @@ def setipport():
 def passwdauth():
     clear()
     ssh_configure_passwdauth_art = colored(text2art('passwdauth'),"yellow")
-    ssh_configure_passwdauth_choose = colored('Choose options:',"yellow") 
+    ssh_configure_passwdauth_menu = colored('Choose options:',"yellow") 
     ssh_configure_passwdauth_button_1 =  colored('1. Set new passwd',"green")
     ssh_configure_passwdauth_button_2 =  colored('2. Main Menu',"green")
     print(f"""{ssh_configure_passwdauth_art}
-                {ssh_configure_passwdauth_choose}
+                {ssh_configure_passwdauth_menu}
                     {ssh_configure_passwdauth_button_1}
                     {ssh_configure_passwdauth_button_2}
 
@@ -186,13 +193,13 @@ def passwdauth():
 def sshconf():
     clear()
     ssh_configure_art = colored(text2art("configure") ,'yellow')
-    ssh_configure_choose = colored('Choose option:','yellow')
+    ssh_configure_menu = colored('Choose option:','yellow')
     ssh_configure_button_1 = colored("1. Set ip:port" ,"green")
     ssh_configure_button_2 = colored( "2. Passwdauth","green")
     ssh_configure_back = colored("3. Main menu","green")
     print(f"""
         {ssh_configure_art}
-            {ssh_configure_choose}
+            {ssh_configure_menu}
                 {ssh_configure_button_1}
                 {ssh_configure_button_2}
                 {ssh_configure_back}
@@ -214,6 +221,6 @@ def sshconf():
         else:
             sshconf()
 def main():
-    choose()
+    menu()
 if __name__ == '__main__':
     main()
