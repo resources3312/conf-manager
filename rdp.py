@@ -31,12 +31,15 @@ def clear():
         os.system("cls")
     else:
         os.system("clear")
+
+
 def get_local_ipv4():
     try:    
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         s.connect(("8.8.8.8", 80))
         ip = s.getsockname()[0]
         s.close()
+        return ip
     except:
            print("Connect for network and try again ")
 
@@ -48,21 +51,19 @@ def definedistr():
 
 
 
-
-
 def rdpinstall():
     os.system("apt update")
     os.system("apt install xrdp -y")
     os.system("apt install xorgrdp -y")
     clear()
-    choose()
+    menu()
 def rdpdown():
     if sys.platform == 'win*':
         pass
     else:
          os.system("systemctl disable xrdp")
          clear()
-    choose()
+    menu()
 def rdpup():
     if sys.platform == 'win*':
         pass
@@ -71,11 +72,11 @@ def rdpup():
          os.system("systemctl enable xrdp")
          os.system("systemctl restart xrdp")
     clear()
-    choose()
-def choose():
+    menu()
+def menu():
     clear()
     rdp_manager_art = colored(text2art("rdp manager"), 'yellow')
-    rdp_manager_choose = colored('Choose option:', 'yellow')
+    rdp_manager_menu = colored('Choose option:', 'yellow')
     rdp_manager_button_1 = colored("1. Enable rdp server",'green')
     rdp_manager_button_2 = colored("2. Disable rdp server",'green')
     rdp_manager_button_3 = colored("3. Install rdp server",'green')
@@ -84,7 +85,7 @@ def choose():
     rdp_manager_back = colored("5. Main menu",'green')
     cprint(f"""{rdp_manager_art}
         
-        {rdp_manager_choose}
+        {rdp_manager_menu}
             {rdp_manager_button_1}
             {rdp_manager_button_2}
             {rdp_manager_button_3}
@@ -103,14 +104,14 @@ def choose():
         elif com == '3':
             clear()
             rdpinstall()
-            choose()
+            menu()
         elif com == '4':
             rdpconf()
         elif com == '5':
             clear()
             confmanager.main()
         else:
-            choose()
+            menu()
 def setipport():
     clear()
     rdp_configure_setiport_art = colored(text2art('ipv4&port') ,'yellow')
@@ -129,13 +130,13 @@ def setipport():
 def rdpconf():
     clear()
     rdp_configure_art = colored(text2art("configure") ,'yellow')
-    rdp_configure_choose = colored('Choose option:','yellow')
+    rdp_configure_menu = colored('Choose option:','yellow')
     rdp_configure_button_1 = colored("1. Set ip:port" ,"green")
     rdp_configure_button_2 = colored( "2. Enable/Disable passwdauth","green")
     rdp_configure_back = colored("3. Main menu","green")
     print(f"""
         {rdp_configure_art}
-            {rdp_configure_choose}
+            {rdp_configure_menu}
                 {rdp_configure_button_1}
                 {rdp_configure_button_2}
                 {rdp_configure_back}
@@ -154,6 +155,6 @@ def rdpconf():
         else:
             rdpconf()
 def main():
-    choose()
+    menu()
 if __name__ == '__main__':
     main()
