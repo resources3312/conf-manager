@@ -13,6 +13,10 @@ import ssh
 import ftp
 import rdp
 import apache
+
+
+
+
 def check_root():
     if os.getuid() != 0:
         sys.exit("Running util for root")
@@ -49,7 +53,7 @@ def art():
 
 def menu():
     art()
-    com = None
+    com = ''
     com = input(colored(">","green"))
     while True:
         if com == "1":
@@ -62,7 +66,7 @@ def menu():
         elif com == '4':
             apache.main()       
         elif com == '5':
-            sys.exit("Quitting...")
+            sys.exit(colored("Quitting...", "green"))
         else:
             menu()
 def main():
