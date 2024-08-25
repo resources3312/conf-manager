@@ -1,16 +1,16 @@
 #! /usr/bin/python
-
-################################################
+"""
 #  ssh manager                                 #
 # This first module confmanager, who is        #
 # responsible for ssh-server.                  #
 #  Coded by: ViCoder32                         #
 #                                              #
 ################################################
+"""
+import sys
+import os
 from subprocess import getoutput
 import socket
-import os
-import sys
 from art import text2art
 from termcolor import colored, cprint
 import confmanager 
@@ -42,6 +42,25 @@ def get_local_ipv4():
            print("Connect for network and try again ")
 
 
+def conf_write_option(file, param, option):
+    """
+    Writing option in config file
+    
+    """
+    try:
+        with open(file, "r", encoding="utf-8") as f:
+            raw = f.read().split()
+            index = raw.index(param) + 1
+            arg = raw[index]
+            old = f"{arg}"
+            new = f"{option}"
+            with open(file, "r", encoding="utf-8") as f:
+                text = f.read()
+                data = text.replace(old, new)
+                with open(file, "w", encoding="utf-8") as f:
+                    f.write(data)
+    except EOFError:
+        return False
 
 def definedistr():
     f = open('/etc/os-release', 'r')
@@ -98,6 +117,7 @@ def sshdown():
     if sys.platform == 'win*':
         pass
     else:
+         clear()
          os.system("systemctl disable ssh")
          clear()
     menu()
@@ -155,18 +175,16 @@ def setipport():
         {ssh_confugure_setipport} 
         {com}    
     """)
-    ip = str(input(colored('ip>',"green")))
-    port = int(input(colored('port>',"green")))
-    os.system(f"sed -i '16a\ListenAddress {ip}' /etc/ssh/sshd_config")
-    os.system(f"sed -i '16d' /etc/ssh/sshd_config")
-    os.system(f"sed -i '14a\Port {port}' /etc/ssh/sshd_config")
-    os.system(f"sed -i '14d' /etc/ssh/sshd_config")
+    ip = input(colored('ip>',"green"))
+    port = input(colored('port>',"green"))
+    conf_write_option("/etc/ssh/sshd_config", "ListenAddress", ip)
+    conf_write_option("/etc/ssh/sshd_config", "Port", port)
     sshconf()
-def passwdauth():
+def user_passwd():
     clear()
-    ssh_configure_passwdauth_art = colored(text2art('passwdauth'),"yellow")
+    ssh_configure_passwdauth_art = colored(text2art('User&Passwd'),"yellow")
     ssh_configure_passwdauth_menu = colored('Choose options:',"yellow") 
-    ssh_configure_passwdauth_button_1 =  colored('1. Set new passwd',"green")
+    ssh_configure_passwdauth_button_1 =  colored('1. Add ssh user',"green")
     ssh_configure_passwdauth_button_2 =  colored('2. Main Menu',"green")
     print(f"""{ssh_configure_passwdauth_art}
                 {ssh_configure_passwdauth_menu}
@@ -190,20 +208,25 @@ def passwdauth():
                 clear()
                 sys.exit()
             else:
-                os.system("passwd")
-                print(colored('[+] Password change', 'green'))
+                clear()
+                print(text2art("Add User"))
+                username = input(colored("username>" ,"green"))
+                os.system(f"useradd {username}")
+                conf_write_option("/etc/ssh/sshd_config", "PermitRootLogin", "no")
+                os.system(f"passwd {username}")
+                print(colored('[+] User {username} was created', 'yellow'))
                 sshconf()
         elif com == '2':
             sshconf()
         else:
-            passwdauth()
+            user_passwd()
 
 def sshconf():
     clear()
     ssh_configure_art = colored(text2art("configure") ,'yellow')
     ssh_configure_menu = colored('Choose option:','yellow')
     ssh_configure_button_1 = colored("1. Set ip:port" ,"green")
-    ssh_configure_button_2 = colored( "2. Passwdauth","green")
+    ssh_configure_button_2 = colored( "2. Set user:passwd","green")
     ssh_configure_back = colored("3. Main menu","green")
     print(f"""
         {ssh_configure_art}
@@ -223,7 +246,7 @@ def sshconf():
         if com == '1':
             setipport()
         elif com == '2':
-            passwdauth()
+            user_passwd()
         elif com == '3':
             main()
         else:
